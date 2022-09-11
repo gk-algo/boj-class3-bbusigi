@@ -1,18 +1,20 @@
+import sys
+input = sys.stdin.readline
+
 if __name__ == "__main__":
     N, M = map(int, input().split(' '))
 
-    names = []
-    for i in range(N):
-        names.append(input())
+    data = {}
+    for num in range(1, N+1):
+        name = input().rstrip()
+        data[num] = name
+        data[name] = num
 
     a = []
     for _ in range(M):
-        q = input()
+        q = input().rstrip()
         try:
             num = int(q)
-            a.append(names[num-1])
+            print(data[num])
         except ValueError:
-            a.append(names.index(q)+1)
-
-    for i in a:
-        print(i)
+            print(data[q])
