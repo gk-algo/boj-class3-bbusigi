@@ -1,7 +1,7 @@
 def DFS(idx,cur_cnt):
     global cnt
     visited[idx] = 1 # 방문 처리
-
+    #print(visited)
     if not 0 in visited: # 방문 다했으면
         if cur_cnt > cnt:
             cnt = cur_cnt
@@ -13,12 +13,13 @@ def DFS(idx,cur_cnt):
         return
 
     else:
-        for col in range(1,M+1):
+        for col in range(1,N+1):
+            #print(f'col : {col}')
             if matrix[idx][col] == 1:
                 cur_cnt +=1
+                #print(f'col : {col}, idx :{idx}')
                 DFS(col,cur_cnt)
-
-    return cnt
+    
 
 if __name__ == '__main__':    
     ## 입력 ##
@@ -30,12 +31,30 @@ if __name__ == '__main__':
         A, B = map(int,input().split())
         matrix[B][A] = 1 # 단방향임
 
-    cnt = 0
-    
-    visited = [0] * (N+1)
-    visited[0] = 'x'    
+    max_cnt = 0
+    max_list = []
 
     for k in range(1,N+1):
+        ## 리스트 초기화
+        visited = [0] * (N+1)
+        visited[0] = 'x'    
+
         ## 출력
-        print(DFS(k,cnt))
-        print(cnt)
+        cnt = 0
+        #print(f'시작 {k}')
+        DFS(k,cnt)
+
+        if cnt > max_cnt:
+            max_list.clear()
+            max_cnt = cnt
+            max_list.append(k)
+        
+        elif cnt == max_cnt:
+            max_cnt = cnt
+            max_list.append(k)
+    
+    max_list.sort()
+
+    for i in max_list:
+        print(i,end=" ")
+
